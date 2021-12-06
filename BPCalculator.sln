@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BPCalculator", "BPCalculator\BPCalculator.csproj", "{5966DA6C-819D-4303-ADC7-425B8541EC84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BPTests", "BPTests\BPTests.csproj", "{E576F0AB-21F6-4C94-86F3-197AA574D744}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BPTests", "BPTests\BPTests.csproj", "{E576F0AB-21F6-4C94-86F3-197AA574D744}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowBPCalculator.Specs", "SpecFlowBPCalculator.Specs\SpecFlowBPCalculator.Specs.csproj", "{9D650764-8717-4A45-9C4C-5FD2C7FAC572}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E576F0AB-21F6-4C94-86F3-197AA574D744}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E576F0AB-21F6-4C94-86F3-197AA574D744}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E576F0AB-21F6-4C94-86F3-197AA574D744}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D650764-8717-4A45-9C4C-5FD2C7FAC572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D650764-8717-4A45-9C4C-5FD2C7FAC572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D650764-8717-4A45-9C4C-5FD2C7FAC572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D650764-8717-4A45-9C4C-5FD2C7FAC572}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

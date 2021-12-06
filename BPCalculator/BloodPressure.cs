@@ -26,7 +26,7 @@ namespace BPCalculator
         public int Diastolic { get; set; }                      // mmHG
 
         // calculate BP category
-        public BPCategory Category
+        public  BPCategory Category
         {
             get
             {

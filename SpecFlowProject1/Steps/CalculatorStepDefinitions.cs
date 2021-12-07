@@ -2,7 +2,7 @@
 using TechTalk.SpecFlow;
 using BPCalculator;
 
-namespace SpecFlowProject1.Specs.Steps
+namespace SpecFlowProject1.Steps
 {
     [Binding]
     public sealed class CalculatorStepDefinitions

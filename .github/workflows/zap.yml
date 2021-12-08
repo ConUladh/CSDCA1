@@ -2,7 +2,7 @@
 # pull docker image
 # run baseline scan on URI and store test result file via volume mounted on container
 
-name: ZAP BMI
+name: ZAP Blood Pressure Calculator
 
 env:
   URI: https://bpcalculator20211123213520.azurewebsites.net           

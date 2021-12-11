@@ -1,0 +1,1965 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_BPCalculator20211123213520_name": {
+            "defaultValue": "BPCalculator20211123213520",
+            "type": "String"
+        },
+        "serverfarms_bmi202120211121092251Plan_externalid": {
+            "defaultValue": "/subscriptions/a882f4c0-fc62-4b48-a7cf-9e930c6579b5/resourceGroups/MyResourceGroup/providers/Microsoft.Web/serverfarms/bmi202120211121092251Plan",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2021-02-01",
+            "name": "[parameters('sites_BPCalculator20211123213520_name')]",
+            "location": "West Europe",
+            "tags": {
+                "hidden-related:/subscriptions/a882f4c0-fc62-4b48-a7cf-9e930c6579b5/resourceGroups/MyResourceGroup/providers/Microsoft.Web/serverFarms/bmi202120211121092251Plan": "empty"
+            },
+            "kind": "app",
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "bpcalculator20211123213520.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "bpcalculator20211123213520.scm.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[parameters('serverfarms_bmi202120211121092251Plan_externalid')]",
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "siteConfig": {
+                    "numberOfWorkers": 1,
+                    "acrUseManagedIdentityCreds": false,
+                    "alwaysOn": false,
+                    "http20Enabled": false,
+                    "functionAppScaleLimit": 0,
+                    "minimumElasticInstanceCount": 1
+                },
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "clientCertMode": "Required",
+                "hostNamesDisabled": false,
+                "customDomainVerificationId": "4028692118B16B25DCBF4A123B0AFF2F3D400DA9335D110A536D3BC2FE100114",
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": true,
+                "redundancyMode": "None",
+                "storageAccountRequired": false,
+                "keyVaultReferenceIdentity": "SystemAssigned"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/ftp')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "tags": {
+                "hidden-related:/subscriptions/a882f4c0-fc62-4b48-a7cf-9e930c6579b5/resourceGroups/MyResourceGroup/providers/Microsoft.Web/serverFarms/bmi202120211121092251Plan": "empty"
+            },
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/scm')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "tags": {
+                "hidden-related:/subscriptions/a882f4c0-fc62-4b48-a7cf-9e930c6579b5/resourceGroups/MyResourceGroup/providers/Microsoft.Web/serverFarms/bmi202120211121092251Plan": "empty"
+            },
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/web')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "tags": {
+                "hidden-related:/subscriptions/a882f4c0-fc62-4b48-a7cf-9e930c6579b5/resourceGroups/MyResourceGroup/providers/Microsoft.Web/serverFarms/bmi202120211121092251Plan": "empty"
+            },
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "remoteDebuggingVersion": "VS2019",
+                "httpLoggingEnabled": false,
+                "acrUseManagedIdentityCreds": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$BPCalculator20211123213520",
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "vnetRouteAllEnabled": false,
+                "vnetPrivatePortsCount": 0,
+                "localMySqlEnabled": false,
+                "managedServiceIdentityId": 30772,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": false,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "scmMinTlsVersion": "1.0",
+                "ftpsState": "AllAllowed",
+                "preWarmedInstanceCount": 0,
+                "functionAppScaleLimit": 0,
+                "functionsRuntimeScaleMonitoringEnabled": false,
+                "minimumElasticInstanceCount": 1,
+                "azureStorageAccounts": {}
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2fb0a3975d8e47cbb5b1c85d984beac0')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"436c4adea4cffd4409a2730c71af2b5e6818efd6\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"Staging\",\"commitMessage\":\"Update dotnet.yml\"}",
+                "start_time": "2021-12-11T19:21:09.1208504Z",
+                "end_time": "2021-12-11T19:21:21.9493121Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/a67012a26a1f4fe6a20680bc3615be82')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"ce82d387a44fad1317c2e4f830070b71dfeda513\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"Staging\",\"commitMessage\":\"Update dotnet.yml\"}",
+                "start_time": "2021-12-11T19:09:54.7211071Z",
+                "end_time": "2021-12-11T19:10:12.6706694Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/eb0b6bccf8f94a94b019f9002d4d75a3')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"3eac143ba4c661958aeed6afc6c1d840e18065a3\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"Staging\",\"commitMessage\":\"Update dotnet.yml\"}",
+                "start_time": "2021-12-11T19:25:08.3948898Z",
+                "end_time": "2021-12-11T19:25:15.3856478Z",
+                "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/hostNameBindings",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/', parameters('sites_BPCalculator20211123213520_name'), '.azurewebsites.net')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "siteName": "BPCalculator20211123213520",
+                "hostNameType": "Verified"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "kind": "app",
+            "properties": {
+                "enabled": true,
+                "hostNameSslStates": [
+                    {
+                        "name": "bpcalculator20211123213520-staging.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Standard"
+                    },
+                    {
+                        "name": "bpcalculator20211123213520-staging.scm.azurewebsites.net",
+                        "sslState": "Disabled",
+                        "hostType": "Repository"
+                    }
+                ],
+                "serverFarmId": "[parameters('serverfarms_bmi202120211121092251Plan_externalid')]",
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "siteConfig": {
+                    "numberOfWorkers": 1,
+                    "acrUseManagedIdentityCreds": false,
+                    "alwaysOn": false,
+                    "http20Enabled": false,
+                    "functionAppScaleLimit": 0,
+                    "minimumElasticInstanceCount": 0
+                },
+                "scmSiteAlsoStopped": false,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "clientCertMode": "Required",
+                "hostNamesDisabled": false,
+                "customDomainVerificationId": "4028692118B16B25DCBF4A123B0AFF2F3D400DA9335D110A536D3BC2FE100114",
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "httpsOnly": true,
+                "redundancyMode": "None",
+                "storageAccountRequired": false,
+                "keyVaultReferenceIdentity": "SystemAssigned"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-24T01_46_12_3573870')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-24T16_46_13_0530824')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-25T01_46_13_4829172')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-25T16_46_14_2410287')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-26T01_46_14_6862777')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-26T16_46_15_3805207')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-27T01_46_15_8085472')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-27T13_46_16_3644469')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-27T16_46_16_5560432')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-27T19_46_16_6874630')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-27T22_46_16_8745994')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-28T01_46_16_9654664')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-28T13_46_17_5243032')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-28T16_46_17_7334932')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-28T19_46_17_8231813')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-28T22_46_18_0036963')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-29T01_46_18_0582777')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-29T13_46_18_6349165')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-29T16_46_18_7865975')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-29T19_46_18_9530627')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-29T22_46_19_0745824')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-30T01_46_19_2011916')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-30T13_46_19_7898899')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-30T16_46_19_9746044')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-30T19_46_20_3264262')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-11-30T22_46_20_2191508')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-01T01_46_20_3649105')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-01T13_46_20_9315627')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-01T16_46_21_1152805')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-01T19_46_21_2237009')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-01T22_46_21_3835165')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-02T01_46_21_4951914')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-02T13_46_22_0668776')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-02T16_46_22_2580160')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-02T19_46_22_3836447')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-02T22_46_22_5199615')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-03T01_46_22_7141809')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-03T13_46_23_2202481')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-03T16_46_23_4577416')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-03T19_46_23_5301708')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-03T22_46_23_6605661')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-04T01_46_23_7968300')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-04T13_46_24_3932046')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-04T16_46_24_6051462')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-04T19_46_24_6777059')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-04T22_46_24_9538673')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-05T01_46_24_9576055')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-05T13_46_25_5713343')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-05T16_46_25_6948101')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-05T19_46_25_8158888')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-05T22_46_25_9879280')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-06T01_46_26_1154183')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-06T13_46_26_6840819')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-06T16_46_26_8470661')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-06T19_46_26_9647415')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-06T22_46_27_0966924')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T01_46_27_2669638')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T11_46_27_7584632')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T12_46_27_7872356')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T13_46_27_8250086')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T14_46_27_8676430')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T15_46_27_9146787')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T16_46_27_9731464')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T17_46_28_0312340')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T18_46_28_0818946')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T19_46_28_1230294')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T20_46_28_1904315')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T21_46_28_2326508')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T22_46_28_3050261')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-07T23_46_28_3285867')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T00_46_28_3790789')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T01_46_28_4516047')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T02_46_28_4933480')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T03_46_28_5269971')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T04_46_28_5862744')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T05_46_28_6120453')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T06_46_28_6996103')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T07_46_28_7161389')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T08_46_28_7728291')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T09_46_28_8190340')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T10_46_28_9571632')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T11_46_28_8926816')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T12_46_28_9498881')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T13_46_29_0041524')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T14_46_29_0439056')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T15_46_29_1910862')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T16_46_29_1677778')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T17_46_29_2038632')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T18_46_29_3295804')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T19_46_29_3016426')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T20_46_29_3677452')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T21_46_29_3987393')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T22_46_29_4457945')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-08T23_46_29_4928726')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T00_46_29_5386120')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T01_46_29_6049949')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T02_46_29_6210152')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T03_46_29_7156627')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T04_46_29_7195677')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T05_46_29_7980895')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T06_46_29_9154002')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T07_46_29_8828971')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T08_46_30_0055111')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T09_46_30_0102228')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T10_46_30_0574820')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T11_46_30_0852402')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T12_46_30_1534308')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T13_46_30_2095735')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T14_46_30_2405911')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T15_46_30_2875731')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T16_46_30_3414665')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T17_46_30_4036178')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T18_46_30_4437096')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T19_46_30_4696584')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T20_46_30_5086336')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T21_46_30_5585939')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T22_46_30_6331265')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-09T23_46_30_6429785')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T00_46_30_7494147')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T01_46_30_7743144')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T02_46_30_7848463')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T03_46_30_9314823')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T04_46_30_8890664')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T05_46_30_9455421')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T06_46_31_0850671')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T07_46_31_0148010')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T08_46_31_0652753')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T09_46_31_1198761')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T10_46_31_1646178')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T11_46_31_2001751')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T12_46_31_3568750')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T13_46_31_3024138')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T14_46_31_4147806')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T15_46_31_3803397')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T16_46_31_4439281')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T17_46_31_5021410')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T18_46_31_6023952')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T19_46_31_5878515')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T20_46_31_6211061')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T21_46_31_6744270')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T22_46_31_7368908')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-10T23_46_31_7650517')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T00_46_31_8065716')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T01_46_31_8530917')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T02_46_31_9190516')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T03_46_31_9507185')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T04_46_31_9955668')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T05_46_32_1583317')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T06_46_32_1760354')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T07_46_32_1487769')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T08_46_32_1778115')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T09_46_32_2242945')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T10_46_32_2678839')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T11_46_32_3094943')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T12_46_32_3977755')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T13_46_32_4054034')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T14_46_32_5091564')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T15_46_32_5531281')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T16_46_32_5804592')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T17_46_32_6121198')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T18_46_32_6420442')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T19_46_32_7020820')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/2021-12-11T20_46_32_7379779')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/ftp')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/scm')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "allow": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/config",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/web')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "numberOfWorkers": 1,
+                "defaultDocuments": [
+                    "Default.htm",
+                    "Default.html",
+                    "Default.asp",
+                    "index.htm",
+                    "index.html",
+                    "iisstart.htm",
+                    "default.aspx",
+                    "index.php",
+                    "hostingstart.html"
+                ],
+                "netFrameworkVersion": "v4.0",
+                "phpVersion": "5.6",
+                "requestTracingEnabled": false,
+                "remoteDebuggingEnabled": false,
+                "httpLoggingEnabled": false,
+                "acrUseManagedIdentityCreds": false,
+                "logsDirectorySizeLimit": 35,
+                "detailedErrorLoggingEnabled": false,
+                "publishingUsername": "$bpcalculator20211123213520__Staging",
+                "scmType": "None",
+                "use32BitWorkerProcess": true,
+                "webSocketsEnabled": false,
+                "alwaysOn": false,
+                "managedPipelineMode": "Integrated",
+                "virtualApplications": [
+                    {
+                        "virtualPath": "/",
+                        "physicalPath": "site\\wwwroot",
+                        "preloadEnabled": false
+                    }
+                ],
+                "loadBalancing": "LeastRequests",
+                "experiments": {
+                    "rampUpRules": []
+                },
+                "autoHealEnabled": false,
+                "vnetRouteAllEnabled": false,
+                "vnetPrivatePortsCount": 0,
+                "localMySqlEnabled": false,
+                "ipSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictions": [
+                    {
+                        "ipAddress": "Any",
+                        "action": "Allow",
+                        "priority": 1,
+                        "name": "Allow all",
+                        "description": "Allow all access"
+                    }
+                ],
+                "scmIpSecurityRestrictionsUseMain": false,
+                "http20Enabled": false,
+                "minTlsVersion": "1.2",
+                "scmMinTlsVersion": "1.0",
+                "ftpsState": "AllAllowed",
+                "preWarmedInstanceCount": 0,
+                "functionAppScaleLimit": 0,
+                "functionsRuntimeScaleMonitoringEnabled": false,
+                "minimumElasticInstanceCount": 0,
+                "azureStorageAccounts": {}
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/07aaeecd623f45b194ce7886986b249e')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"b5150615181111bab3fb93fb692634ee5e1843dc\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Create zap.yml\"}",
+                "start_time": "2021-12-08T12:59:00.7151751Z",
+                "end_time": "2021-12-08T12:59:06.6278083Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/1e1b3d573a4b4fa7884e5ff747641d91')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"fde7cf29a8c734109728bab691685e20fad32b07\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Create k6test.yml\"}",
+                "start_time": "2021-12-09T15:48:29.7864293Z",
+                "end_time": "2021-12-09T15:48:33.9270744Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/227d1a0d0a66442e922187710439408c')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"ad0562562bdfc30497bdf59f2eb05008893a6021\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Update zap.yml\"}",
+                "start_time": "2021-12-08T13:03:10.6628659Z",
+                "end_time": "2021-12-08T13:03:14.7722225Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/259cd02220d24fc8be5955a5b6293892')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"dfacc330fa1ff5306ecdfdc9b8d76cd76c78aac1\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Update VirusTotal.yml\"}",
+                "start_time": "2021-12-08T13:07:03.4939689Z",
+                "end_time": "2021-12-08T13:07:07.5720687Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/4a608d5892a946108e7b32861d94b8cf')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"c5fe6e15c2a8a731da8cbfd92b70f62c762a1efd\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Create VirusTotal\"}",
+                "start_time": "2021-12-08T12:22:27.467659Z",
+                "end_time": "2021-12-08T12:22:31.5614371Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/6d733e4ed5c44521a672c3510bb16cd8')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"84c7165b637ddb7de5b39d04de1e9ee26ca9a8d1\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Added K6 test script\"}",
+                "start_time": "2021-12-09T15:42:19.4356492Z",
+                "end_time": "2021-12-09T15:42:27.8495613Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/79e1dc20e81b405495447b5e3cea783f')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"99d9df4458df7893941cfc0db88c7c890db68d87\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Create AZCLI.yml\"}",
+                "start_time": "2021-12-10T15:58:27.5466058Z",
+                "end_time": "2021-12-10T15:58:33.9549005Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/b793edac5e2741e4a091648e15389e0c')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"60a6e429873150954145f53fa426b9c8ed35ce9c\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Delete VirusTotal\"}",
+                "start_time": "2021-12-08T13:01:46.0918734Z",
+                "end_time": "2021-12-08T13:01:50.6856403Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/dfc52746be174258bcc888e00325116e')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"90d47ef5453893ad839e624b5f7433af259ad94f\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Update dotnet.yml\"}",
+                "start_time": "2021-12-11T18:50:20.7478596Z",
+                "end_time": "2021-12-11T18:50:29.0338502Z",
+                "active": true
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/deployments",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/e7b2126a9d5a460d99ac86c3d66ebe1b')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "status": 4,
+                "author_email": "N/A",
+                "author": "N/A",
+                "deployer": "GITHUB_ZIP_DEPLOY",
+                "message": "{\"type\":\"deployment\",\"sha\":\"1e7eb5148371f4b01f14012245bda5ed00f52248\",\"repoName\":\"ConUladh/CSDCA1\",\"slotName\":\"production\",\"commitMessage\":\"Create VirusTotal.yml\"}",
+                "start_time": "2021-12-08T13:01:33.2800168Z",
+                "end_time": "2021-12-08T13:01:37.5143188Z",
+                "active": false
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/hostNameBindings",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/', parameters('sites_BPCalculator20211123213520_name'), '-staging.azurewebsites.net')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ],
+            "properties": {
+                "siteName": "bpcalculator20211123213520(Staging)",
+                "hostNameType": "Verified"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/siteextensions",
+            "apiVersion": "2021-02-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/Microsoft.AspNetCore.AzureAppServices.SiteExtension')]",
+            "location": "West Europe",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/2021-12-11T18_46_32_6420442')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/2021-12-11T19_46_32_7020820')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Web/sites/slots/snapshots",
+            "apiVersion": "2015-08-01",
+            "name": "[concat(parameters('sites_BPCalculator20211123213520_name'), '/Staging/2021-12-11T20_46_32_7379779')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/sites/slots', parameters('sites_BPCalculator20211123213520_name'), 'Staging')]",
+                "[resourceId('Microsoft.Web/sites', parameters('sites_BPCalculator20211123213520_name'))]"
+            ]
+        }
+    ]
+}

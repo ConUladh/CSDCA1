@@ -1,0 +1,12 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_BPCalculator20211123213520_name": {
+            "value": null
+        },
+        "serverfarms_bmi202120211121092251Plan_externalid": {
+            "value": null
+        }
+    }
+}

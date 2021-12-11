@@ -40,3 +40,8 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_STAGING_PUBLISH_PROFILE  }}
         slot-name: Staging
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
+        
+# blue/green
+    - name: swap QA and production slots
+      run: |
+        az webapp deployment slot swap -n bpcalculator20211123213520 -g MyResourceGroup --slot staging --target-slot production

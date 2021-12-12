@@ -28,7 +28,7 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./template.json
-        parameters: sites_BPCalculator20211123213520_name=${{ env.AZURE_WEBAPP_NAME }}
+        #parameters: sites_BPCalculator20211123213520_name=${{ env.AZURE_WEBAPP_NAME }}
 
       # output containerName variable from template
     - run: echo ${{ steps.deploy.outputs.containerName }}

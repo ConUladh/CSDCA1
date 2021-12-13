@@ -10,6 +10,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: bpcalculator20211123213520   # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: 'publish'      # set this to the path to your web app project, defaults to the repository root
+  STAGING_URI: https://bpcalculator20211123213520-staging.azurewebsites.net
 
 jobs:
   build:
@@ -119,8 +120,41 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}                         # JSON objects whic represents service principal
-        
+    
+      
 # blue/green
     - name: swap QA and production slots
       run: |
         az webapp deployment slot swap -n bpcalculator20211123213520 -g MyResourceGroup --slot staging --target-slot production
+
+  k6_cloud_test:
+    name: k6 cloud test run
+    needs: deploy_test_blue_green
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Run k6 cloud test
+        uses: k6io/action@v0.1
+        with:
+          filename: k6test.js
+          cloud: true
+          token: ${{ secrets.K6_CLOUD_API_TOKEN }}
+          
+  zap_baseline_scan:
+    needs: deploy_test_blue_green
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Pull Docker image for ZAP
+      run: docker pull owasp/zap2docker-weekly
+
+    - name: Run baseline scan
+      run: docker run -v /report:/zap/wrk/:rw --user root -t owasp/zap2docker-weekly zap-baseline.py -t ${{env.STAGING_URI}} -I -r zapreport.html
+  
+    - uses: actions/upload-artifact@v2
+      name: upload ZAP report
+      with:
+        name: ZAPreport
+        path: /report/zapreport.html 

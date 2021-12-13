@@ -120,20 +120,7 @@ jobs:
         slot-name: staging
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
   
-  ProductionSwap:
-    runs-on: windows-latest
-    steps:
-    # login to Azure account
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}                         # JSON objects whic represents service principal
-    
-      
-# blue/green
-    - name: swap QA and production slots
-      run: |
-        az webapp deployment slot swap -n bpcalculator20211123213520 -g MyResourceGroup --slot staging --target-slot production
-
+  
   k6_cloud_test:
     name: k6 cloud test run
     needs: deploy_test_blue_green
@@ -165,3 +152,21 @@ jobs:
       with:
         name: ZAPreport
         path: /report/zapreport.html 
+
+  ProductionSwap:
+    needs: {k6_cloud_test, zap_baseline_scan}
+    environment:
+      name: Production
+      url: https://bpcalculator20211123213520.azurewebsites.net 
+    runs-on: windows-latest
+    steps:
+    # login to Azure account
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}                         # JSON objects whic represents service principal
+    
+      
+# blue/green
+    - name: swap staging and production slots
+      run: |
+        az webapp deployment slot swap -n bpcalculator20211123213520 -g MyResourceGroup --slot staging --target-slot production

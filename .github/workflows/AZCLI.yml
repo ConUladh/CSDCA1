@@ -27,8 +27,8 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
-        #template: ./template.json
-        template: ./profile.arm.json
+        template: ./template.json
+        #template: ./profile.arm.json
         #parameters: sites_BPCalculator20211123213520_name=${{ env.AZURE_WEBAPP_NAME }}
 
       # output containerName variable from template

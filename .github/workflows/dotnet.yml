@@ -10,8 +10,6 @@ on:
 env:
   AZURE_WEBAPP_NAME: bpcalculator20211123213520   # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: 'publish'      # set this to the path to your web app project, defaults to the repository root
-  PROD_URI: https://bpcalculator20211123213520.azurewebsites.net
-  STAGING_URI: https://bpcalculator20211123213520-staging.azurewebsites.net
 
 jobs:
   build:
@@ -33,124 +31,18 @@ jobs:
 
     - name: Publish
       run: dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
-      
-  depchecktest:
-    needs: build
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Depcheck
-        uses: dependency-check/Dependency-Check_Action@main
-        id: Depcheck
-        with:
-          project: 'BPCalculator'
-          path: '.'
-          format: 'HTML'    
-          args: >
-            --failOnCVSS 7
-            --enableRetired
-      - name: Upload Test results
-        uses: actions/upload-artifact@master
-        with:
-           name: Depcheck report
-           path: ${{github.workspace}}/reports      
 
-  sonarcloud_scan:
-    needs: depchecktest
-    runs-on: windows-latest
-    steps:
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.11
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v1
-        with:
-          path: ~\sonar\cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Cache SonarCloud scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v1
-        with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
-      - name: Install SonarCloud scanner
-        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-        shell: powershell
-        run: |
-          New-Item -Path .\.sonar\scanner -ItemType Directory
-          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"ConUladh_CSDCA1" /o:"conuladh" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
-
-  deploy_test_blue_green:                                             
-    name: deploy to staging slot, run E2E tests
-    needs: sonarcloud_scan
-    environment:
-      name: Staging
-      url: env.STAGING_URI #https://bpcalculator20211123213520-staging.azurewebsites.net                               
-    runs-on: windows-latest
-    steps:
-    - uses: azure/webapps-deploy@v2
+# Deploy to Azure Web apps
+    - name: Run Azure webapp deploy action using publish profile credentials
+      uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.AZURE_WEBAPP_NAME }}                        # your app name
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-#        slot-name: Staging
+        #publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+        publish-profile: ${{ secrets.AZURE_WEBAPP_STAGING_PUBLISH_PROFILE  }}
+        slot-name: Staging
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
-
-  k6_cloud_test:
-    name: k6 cloud test run
-    needs: deploy_test_blue_green
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: Run k6 cloud test
-        uses: k6io/action@v0.1
-        with:
-          filename: k6test.js
-          cloud: true
-          token: ${{ secrets.K6_CLOUD_API_TOKEN }}
-          
-  zap_baseline_scan:
-    needs: deploy_test_blue_green
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: Pull Docker image for ZAP
-      run: docker pull owasp/zap2docker-weekly
-
-    - name: Run baseline scan
-      run: docker run -v /report:/zap/wrk/:rw --user root -t owasp/zap2docker-weekly zap-baseline.py -t ${{env.STAGING_URI}} -I -r zapreport.html
-  
-    - uses: actions/upload-artifact@v2
-      name: upload ZAP report
-      with:
-        name: ZAPreport
-        path: /report/zapreport.html          
-
-  Production_deployment:    
-    needs: deploy_test_blue_green
-    environment:
-      name: Production
-      url: env.PROD_URI
-    # login to Azure account
+        
+# login to Azure account
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}                         # JSON objects whic represents service principal

@@ -20,7 +20,7 @@ export const options = {
 export default function main() {
   let response;
 
-  response = http.get("https://bpcalculator20211123213520.azurewebsites.net");
+  response = http.get("https://bpcalculator20211123213520-staging.azurewebsites.net");
 
   // Automatically added sleep
   sleep(1);

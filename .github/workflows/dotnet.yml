@@ -29,9 +29,6 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
 
-    - name: Publish
-      run: dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
-
   deploy_test_blue_green:                                             
     name: deploy to staging slot, run E2E tests, swap slots
     needs: build
@@ -41,6 +38,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+
+    - name: Publish
+      run: dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp' 
 
     # Deploy to Azure app service to staging slot using publish profile for staging slot
     - name: Run Azure webapp deploy action using publish profile credentials

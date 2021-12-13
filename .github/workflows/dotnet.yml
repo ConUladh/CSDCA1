@@ -154,7 +154,7 @@ jobs:
         path: /report/zapreport.html 
 
   ProductionSwap:
-    needs: {k6_cloud_test, zap_baseline_scan}
+    needs: deploy_test_blue_green
     environment:
       name: Production
       url: https://bpcalculator20211123213520.azurewebsites.net 

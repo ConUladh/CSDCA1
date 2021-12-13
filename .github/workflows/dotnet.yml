@@ -55,7 +55,11 @@ jobs:
            path: ${{github.workspace}}/reports      
 
   sonarcloud_scan:
+    name: SonarCloudScan
     needs: depchecktest
+    environment:
+      name: Staging
+      url: https://sonarcloud.io/dashboard?id=ConUladh_CSDCA1&branch=main
     runs-on: windows-latest
     steps:
       - name: Set up JDK 11
@@ -115,8 +119,11 @@ jobs:
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}     # Define secret variable in environment
         slot-name: staging
         package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp'
-      
-# login to Azure account
+  
+  ProductionSwap:
+    runs-on: windows-latest
+    steps:
+    # login to Azure account
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}                         # JSON objects whic represents service principal
